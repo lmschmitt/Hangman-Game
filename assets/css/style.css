@@ -1,0 +1,25 @@
+#correctGuess {
+
+}
+
+ .letters {
+    display: inline-block;
+    list-style: none;
+    width: 20px;
+    margin: 0 5px;
+    border-bottom: 1px solid black;
+    text-align: center;
+    color: white;
+}
+
+.space {
+	border: none;
+	border-bottom: 0px;
+	text-decoration: none;
+	color:#eeeeee;
+}
+
+.correct {
+    background-color: yellow;
+    transition: all 1s ease;
+}

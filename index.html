@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	
+	<title>Hangman-Game</title>
+</head>
+<body>
+
+
+ <div class="container">
+      <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+        	<div>
+        	<div><span id="correctGuess"></span></div>
+ 		 	<div id="wordToGuess"></div>
+          </div>
+        </div>
+      </div>
+    
+
+ 
+
+
+
+<script type="text/javascript">
+
+	//create array with words
+	var answers = ['one', 'two', 'three'];
+	
+	// choose word @ random and turn letters into another array
+	var answerLetters = [];
+	var rand = answers[Math.floor(Math.random() * answers.length)];
+	answerLetters = rand.split("");
+
+	//logging data - delete later
+	console.log(answerLetters);
+	console.log(answerLetters[0]);
+	
+	//display this on the page
+	var blank;
+	var letters;
+	for (i = 0; i < answerLetters.length; i++) {
+		blank = '<span class="blank">' + " "+ '</span>';
+		letters = '<span class="letters">' + answerLetters[i] + '</span>';
+		document.querySelector("#correctGuess").innerHTML += letters + blank;
+      };
+
+	document.onkeyup = function(event) {
+
+	//capture user guess
+	userGuess = event.key;
+	console.log(userGuess);
+
+
+	for (i = 0; i < answerLetters.length; i++) {
+		if (userGuess === answerLetters[i]) {
+			document.querySelector('.letters').className = 'correct';
+		}
+			
+	}
+
+	}
+	
+
+	//check to see if guess is in the answer
+	
+
+	//if (answerLetters.includes(userGuess)){
+	//var lettersReveal;
+		//lettersReveal = document.querySelectorAll(".letters" + userGuess.toUpperCase());
+
+		//for (var i=0; i < lettersReveal.length; i++) {
+			//lettersReveal[i].classList.add("correct");
+		//}
+		//console.log("true");
+	//};
+
+
+//};
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+
+</html>
