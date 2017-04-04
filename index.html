@@ -44,26 +44,28 @@
 	var letters;
 	for (i = 0; i < answerLetters.length; i++) {
 		blank = '<span class="blank">' + " "+ '</span>';
-		letters = '<span class="letters">' + answerLetters[i] + '</span>';
+		letters = '<span class="letters '+ answerLetters[i] +'">' + answerLetters[i] + '</span>';
 		document.querySelector("#correctGuess").innerHTML += letters + blank;
-      };
+		console.log(letters);
+    };
 
 	document.onkeyup = function(event) {
 
-	//capture user guess
-	userGuess = event.key;
-	console.log(userGuess);
+		//capture user guess
+		userGuess = event.key;
+		console.log(userGuess);
 
-
-	for (i = 0; i < answerLetters.length; i++) {
-		if (userGuess === answerLetters[i]) {
-			document.querySelector('.letters').className = 'correct';
+		var foundGuess = document.querySelector("."+userGuess);
+		console.log(foundGuess);
+		
+		for (i = 0; i < answerLetters.length; i++) {
+			//i think this is going in the right direction but this code is not ok
+			//letters '+ answerLetters[i] +'.className = "correct";
 		}
-			
-	}
 
 	}
 	
+
 
 	//check to see if guess is in the answer
 	
