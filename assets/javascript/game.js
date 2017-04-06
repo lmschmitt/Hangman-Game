@@ -1,34 +1,151 @@
 
-	//our answers object
 
-	
-	var answers = ['one', 'two', 'three'];
-	//var word = document.getElementbyId("wordToGuess");
-	//  in the array answerLetters one of the options from the answers array will randomly be chosen and split into individual characters.
+
+	//create array with words
+	var answers = [ "one", "two", "three"];
+
+	//declare global variables
+	var lives = 5;
+	var livesContainer;
+	var messageContainer;
+	var guessed = document.getElementById("lettersGuessed");
+	var lossesDisplay = document.getElementById("losses");
+	var winsDisplay = document.getElementById("wins");
+	var losses = 0;
+	var wins = 0; 
+	var mainContainer;
 	var answerLetters = [];
-	var rand = answers[Math.floor(Math.random() * answers.length)];
-	answerLetters = rand.split("");
-	console.log(answerLetters);
-	console.log(answerLetters[0]);
+	var correctGuesses = 0;
+	var lettersToGuess = 0;
+	var rand = [];
+	var answerLetters = [];
+
+	//set losses and wins to zero
+	winsDisplay.innerHTML = "wins: " + wins ;
+	lossesDisplay.innerHTML = "losses: " + losses;
+
 	
+	function startGame() {
+	lettersToGuess = 0;
+	correctGuesses = 0;
+	var lives = 5;
+	mainContainer = document.getElementById("wordToGuess");	
+	mainContainer.innerHTML = "";
+	livesContainer = document.getElementById("lives");
+	livesContainer.innerHTML = "You have " +  lives + " lives left.";
+	messageContainer = document.getElementById("messages");
+	messageContainer.innerHTML = "Guess a letter.";
+	guessed.innerHTML = "Letters Guessed: ";
+	rand = answers[Math.floor(Math.random() * answers.length)];
+	answerLetters = rand.split("");
 
-	for (i = 0; i < answerLetters.length; i++) {
-		document.querySelector("#wordToGuess").innerHTML = "a";
-        console.log("_");
-      };
 
+
+	//logging data - delete later
+	console.log(answerLetters);
+
+	
+	//for each letter in our selection we need to create a span
+	for(var i = 0; i < answerLetters.length; i++) {
+		var span = document.createElement("span");
+		//setting the span id to the index. (so if the answer is three this loop would create a span with an id named after each index: "0" "1" "2" "3" "4".)
+		span.setAttribute("id", i);
+		//this creates an underscore for each answer in the answerLetters array (for the answer of three this will output five underscores.)
+		span.innerHTML = "_  ";
+		//put the span into the main container (the wordToGuess div in html doc)
+		mainContainer.appendChild(span);
+		lettersToGuess++;
+		console.log(lettersToGuess);
+	}
+
+		}
+    
+    startGame();
+
+
+	//when the user hits a key (and releases it) the following function will be performed.
 	document.onkeyup = function(event) {
+		//capture user guess as a variable called UserGuess
+		userGuess = event.key;
+		
+		// create the variable guessed for the html div lettersGuessed.
+		
+		//insert guessed letters into lettersGuessed div. 
+		guessed.innerHTML += userGuess;
+		//create an array called correct
+		var correct = [];
+		// creates a loop that takes place as many times as there are indices in the answerLetters array. 
+		for (var i = 0; i < answerLetters.length; i++) {
+			//if the user guess is equal to the answer
+			if (userGuess===answerLetters[i]) {
+				//then push it into the correct array (this will allow us to end up with an array of correct guesses, the array will be made up of numbers ex: if user guess is "e" and answer is three, this will push [3,4] into correct.)
+				correct.push(i);
+				correctGuesses++;
+				console.log(correctGuesses);
+		
+			//end if statement	
+			}
+		//end for loop	
+		}
+			if (userGuess===answerLetters[i]) {
+				correctGuesses++;
+				console.log(correctGuesses);
+			}
+		// creates a loop that takes place as many times as there are indices in the correct array. (in the example of the guess of "e" for the answer of three it would occur twice.)
+		for (var i = 0; i < correct.length; i++) {
+			//this creates a span and sets it equal to the correct index. (So for the guess of "e" this loop will get the span we created above 3 and on the second loop it will get span 4)
+			span = document.getElementById(correct[i]);
+			// this sets the HTML inside the span to whatever the userGuess was ( so for the guess of "e" this will set span 3 and 4 to "e". if we did not have the above statement this would have put "e" into all five spaces.)
+			span.innerHTML = userGuess;
+		
 
-	//log the key the user guesses as a variable called userGuess
-	userGuess = event.key;
-	console.log(userGuess);
+		//end for loop	
+		}
+		
+		//is user Guess is not in the answer then give the user one less life. 
+		var isCorrect = false;
+		for (var i = 0; i < answerLetters.length; i++) {
+			if (userGuess===answerLetters[i]) {
+				isCorrect = true;
+			}
+		}
+	
+		
+		
+		if (isCorrect === false) {
+				lives--;
+				livesContainer.innerHTML = "You have " +  lives + " lives left.";
+		
+		}
 
-	if (answerLetters.includes(userGuess)){
-		console.log("true");
-	};
+		if (lives===0) {
+			alert("You Lose. Play again.");
+			startGame();
+			losses++;
+			lossesDisplay.innerHTML = "losses: " + losses;
+			startGame();
+
+		}
 
 
-};
+		if (lettersToGuess === correctGuesses) {
+			alert ("You win. Play again.");
+			wins++;
+			winsDisplay.innerHTML = "wins: " + wins ;
+			startGame();
+
+		}
+
+
+
+		
+
+	//end function on key up
+	}
+
+
+
+
 
 
 
